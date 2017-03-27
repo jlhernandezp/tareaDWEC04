@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/jquery-1.11.1.js"></script>
+        <script src="js/jquery.validate.js"></script>
+        <script src="js/messages_es.js"></script>
+        <style type="text/css">
+            body {
+                font-family: sans-serif;
+            }
+            legend {
+                font-size: xx-large;
+            }
+            div {
+                background-color: aquamarine;
+                width: 400px;
+                margin:auto;
+            }
+            label {
+                font-weight: bold;
+                display: block;
+                margin-left: 10%;
+                padding-top: .5em;
+            }
+            input {
+                width: 300px;
+                margin-left: 8%;
+                padding: .2em ;
+                border-radius: 10px;
+            }
+            .error {
+                color: red;
+                font-size: small;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="contenido">
+            <fieldset id="formulario"> 
+                <legend>Tarea DWEC04 jQuery.validate</legend>
+            <form name="personas" id="personas">
+                <label for="nombre">Nombre:</label>
+                <input type="text" name="nombre" id="nombre"/><br/>
+                <label for="apellido1">Primer Apellido:</label>
+                <input type="text" name="apellido1" id="apellido1"/><br/>
+                <label for="apellido2">Segundo Apellido:</label>
+                <input type="text" name="apellido2" id="apellido2"/><br/>
+                <label for="edad">Edad:</label>
+                <input type="number" name="edad" id="edad"/><br/>
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email"/><br/>
+                <label for="url">URL:</label>
+                <input type="url" name="url" id="url"/><br/>
+                <label for="tlf">Teléfono</label>
+                <input type="text" name="tlf" id="tlf"/><br/>
+                <label for="nif">NIF:</label>
+                <input type="text" name="nif" id="nif"/><br/>
+                <label for="comentarios">Comentarios:</label>
+                <input type="text" name="comentarios" id="comentarios"/><br/><br/>
+                <input type="submit" name="enviar" id="enviar" value="Enviar"/>
+            </form>
+            </fieldset>
+            <script type="text/javascript">
+                $().ready(function (){
+                    jQuery.validator.addMethod("cTelefono", function(value, element) { //función de validación del teléfono
+                        return this.optional(element) || /^(97)[468](\d){6}$/.test(value);
+                    });
+                     jQuery.validator.addMethod("cNif", function(value, element) {     //función de validación del NIF
+                        return this.optional(element) || /^\d{2}\.\d{3}\.\d{3}-[a-z]$/.test(value);
+                    });
+                    $("#personas").validate({
+                        rules: {
+                            nombre: {
+                                required: true,
+                                minlength: 4
+                            },
+                            apellido1: {
+                                required: true,
+                                minlength: 4
+                            },
+                            apellido2: {
+                                required: true,
+                                minlength: 4
+                            },
+                            edad: {
+                                required: true,
+                                min: 18,
+                                max: 100
+                            },
+                            email: {
+                                required: true
+                            },
+                            url: {
+                                required: true
+                            },
+                            tlf: {
+                                required: true,
+                                cTelefono: true                                
+                            },
+                            nif: {
+                                required: true,
+                                cNif: true
+                                
+                            },
+                            comentarios: {
+                                required: true,
+                                minlength: 10
+                            }
+                            
+                        },
+                        messages: {
+                            edad:{
+                                min: "La edad mínima es de 18 años",
+                                max: "La edad máxima es de 100 años"
+                            },
+                            url:{
+                                required: "Debe introducir una URL válida"
+                                
+                            },
+
+                            tlf:{
+                                required: "Debe introducir un número de teléfono válido (prefijo 974,976 ó 978)",
+                                cTelefono: "El telefono debe comenzar por 974, 976 o 978 y tener una longitud de 9 dígitos"
+                            },
+                            nif:{
+                                cNif: "El formato de nif es :dd.ddd.ddd-l con la letra en minúsculas"
+                            }
+                        }
+                    })
+                
+                    
+                });
+            </script>
+        </div>
+    </body>
+</html>
